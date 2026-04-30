@@ -1,3 +1,5 @@
+#pragma once
+
 #include <array>
 #include <vector>
 
@@ -11,6 +13,7 @@ class Sudoku {
     std::array<int, 9> get_column(int column_index);
     std::array<int, 9> get_square(int square_index);
     void set_square(int square_index, std::vector<int> values);
+    void set_grid(std::vector<std::vector<int>> values);
     bool is_valid();
     void print();
 

@@ -10,8 +10,8 @@ Sudoku::Sudoku() {
 
 std::array<std::array<int, 9>, 9> Sudoku::initialize_grid() {
     std::array<std::array<int, 9>, 9> final_grid{};
-    grid.fill({0, 0, 0, 0, 0, 0, 0, 0, 0});
-    return grid;
+    final_grid.fill({0, 0, 0, 0, 0, 0, 0, 0, 0});
+    return final_grid;
 }
 
 int Sudoku::get_space(int row, int col) {
@@ -97,6 +97,8 @@ std::array<int, 9> Sudoku::get_square(int square_index) {
             row = 7;
             break;
         default:
+            col = 0;
+            row = 0;
             break;
     }
 
@@ -115,7 +117,6 @@ void Sudoku::set_square(int square_index, std::vector<int> values) {
     int row;
     int col;
 
-    std::array<int, 9> square;
     switch (square_index) {
         case 0:
             col = 1;
@@ -154,6 +155,8 @@ void Sudoku::set_square(int square_index, std::vector<int> values) {
             row = 7;
             break;
         default:
+            col = 0;
+            row = 0;
             break;
     }
 
@@ -163,6 +166,13 @@ void Sudoku::set_square(int square_index, std::vector<int> values) {
             auto value = values[idx++];
             this->set_space(i, j, value);
         }
+    }
+}
+
+void Sudoku::set_grid(std::vector<std::vector<int>> values) {
+    assert(values.size() == 9);
+    for (int i = 0; i < 9; i++) {
+        this->set_square(i, values[i]);
     }
 }
 
