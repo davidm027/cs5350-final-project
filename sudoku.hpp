@@ -1,4 +1,5 @@
 #include <array>
+#include <vector>
 
 class Sudoku {
    public:
@@ -9,6 +10,8 @@ class Sudoku {
     std::array<int, 9> get_row(int row_index);
     std::array<int, 9> get_column(int column_index);
     std::array<int, 9> get_square(int square_index);
+    void set_square(int square_index, std::vector<int> values);
+    bool is_valid();
     void print();
 
    private:

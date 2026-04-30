@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <set>
 
 Sudoku::Sudoku() {
     this->grid = this->initialize_grid();
@@ -53,7 +54,7 @@ std::array<int, 9> Sudoku::get_column(int column_index) {
 }
 
 std::array<int, 9> Sudoku::get_square(int square_index) {
-    assert(square_index >= 1 && square_index <= 9 && "Desired square must be in between 1 and 9.");
+    assert(square_index >= 0 && square_index <= 8 && "Desired square must be in between 0 and 8.");
     int row;
     int col;
 
@@ -107,6 +108,81 @@ std::array<int, 9> Sudoku::get_square(int square_index) {
     }
 
     return square;
+}
+
+void Sudoku::set_square(int square_index, std::vector<int> values) {
+    assert(square_index >= 0 && square_index <= 8 && "Desired square must be in between 0 and 8.");
+    int row;
+    int col;
+
+    std::array<int, 9> square;
+    switch (square_index) {
+        case 0:
+            col = 1;
+            row = 1;
+            break;
+        case 1:
+            col = 4;
+            row = 1;
+            break;
+        case 2:
+            col = 7;
+            row = 1;
+            break;
+        case 3:
+            col = 1;
+            row = 4;
+            break;
+        case 4:
+            col = 4;
+            row = 4;
+            break;
+        case 5:
+            col = 7;
+            row = 4;
+            break;
+        case 6:
+            col = 1;
+            row = 7;
+            break;
+        case 7:
+            col = 4;
+            row = 7;
+            break;
+        case 8:
+            col = 7;
+            row = 7;
+            break;
+        default:
+            break;
+    }
+
+    int idx = 0;
+    for (int i = row - 1; i <= row + 1; i++) {
+        for (int j = col - 1; j <= col + 1; j++) {
+            auto value = values[idx++];
+            this->set_space(i, j, value);
+        }
+    }
+}
+
+bool Sudoku::is_valid() {
+    // for each row, column, and square:
+    //   - remove duplicates (create std::set<int> from iterators, e.g. row.begin() and row.end())
+    //   - if new list does not have length 9, return false immediately
+    for (int i = 0; i < 9; i++) {
+        auto row = this->get_row(i);
+        std::set<int> row_set(row.begin(), row.end());
+        auto col = this->get_column(i);
+        std::set<int> col_set(col.begin(), col.end());
+        auto square = this->get_square(i);
+        std::set<int> square_set(square.begin(), square.end());
+        // std::set<int> s(this->get_grid().begin(), this->get_grid().end());
+        if (row_set.size() != 9 || col_set.size() != 9 || square_set.size() != 9) {
+            return false;
+        }
+    }
+    return true;
 }
 
 void Sudoku::print() {
