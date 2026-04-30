@@ -3,7 +3,8 @@
 #include <array>
 #include <vector>
 
-class Sudoku {
+class Sudoku
+{
    public:
     Sudoku();
     int get_space(int row, int col);

@@ -3,7 +3,8 @@
 
 #include "sudoku.hpp"
 
-Sudoku setup_valid_square() {
+Sudoku setup_valid_square()
+{
     Sudoku s;
     std::vector<std::vector<int>> squares{
         {1, 2, 6, 5, 9, 8, 7, 4, 3}, {7, 5, 8, 1, 4, 3, 9, 6, 2}, {9, 3, 4, 6, 7, 2, 8, 5, 1},
@@ -15,7 +16,8 @@ Sudoku setup_valid_square() {
     return s;
 }
 
-Sudoku setup_invalid_square_row() {
+Sudoku setup_invalid_square_row()
+{
     Sudoku s;
     std::vector<std::vector<int>> squares{
         {1, 2, 6, 5, 9, 9, 7, 4, 3}, {7, 5, 8, 1, 4, 3, 9, 6, 2}, {9, 3, 4, 6, 7, 2, 8, 5, 1},
@@ -27,7 +29,8 @@ Sudoku setup_invalid_square_row() {
     return s;
 }
 
-Sudoku setup_invalid_square_col() {
+Sudoku setup_invalid_square_col()
+{
     Sudoku s;
     std::vector<std::vector<int>> squares{
         {1, 2, 6, 5, 9, 8, 7, 4, 3}, {7, 5, 8, 1, 4, 3, 9, 6, 2}, {9, 3, 4, 6, 7, 2, 8, 5, 1},
@@ -39,7 +42,8 @@ Sudoku setup_invalid_square_col() {
     return s;
 }
 
-Sudoku setup_invalid_square_section() {
+Sudoku setup_invalid_square_section()
+{
     Sudoku s;
     std::vector<std::vector<int>> squares{
         {1, 2, 6, 5, 9, 8, 7, 4, 3}, {7, 5, 8, 1, 4, 3, 9, 6, 2}, {9, 3, 4, 6, 7, 2, 8, 5, 1},
@@ -51,7 +55,8 @@ Sudoku setup_invalid_square_section() {
     return s;
 }
 
-void test_get_space() {
+void test_get_space()
+{
     std::cout << "Testing s.get_space()...\n";
 
     Sudoku s = setup_valid_square();
@@ -67,7 +72,8 @@ void test_get_space() {
     std::cout << "Completed s.get_space() tests.\n";
 }
 
-void test_set_space() {
+void test_set_space()
+{
     std::cout << "Testing s.set_space()...\n";
 
     Sudoku s = setup_valid_square();
@@ -86,7 +92,8 @@ void test_set_space() {
     std::cout << "Completed s.set_space() tests.\n";
 }
 
-void test_get_row() {
+void test_get_row()
+{
     std::cout << "Testing s.get_row()...\n";
 
     Sudoku s = setup_valid_square();
@@ -105,7 +112,8 @@ void test_get_row() {
     std::cout << "Completed s.get_row() tests.\n";
 }
 
-void test_get_column() {
+void test_get_column()
+{
     std::cout << "Testing s.get_column()...\n";
 
     Sudoku s = setup_valid_square();
@@ -124,7 +132,8 @@ void test_get_column() {
     std::cout << "Completed s.get_column() tests.\n";
 }
 
-void test_get_square() {
+void test_get_square()
+{
     std::cout << "Testing s.get_square()...\n";
 
     Sudoku s = setup_valid_square();
@@ -143,7 +152,8 @@ void test_get_square() {
     std::cout << "Completed s.get_square() tests.\n";
 }
 
-void test_set_square() {
+void test_set_square()
+{
     std::cout << "Testing s.set_square()...\n";
 
     Sudoku s = setup_valid_square();
@@ -157,7 +167,8 @@ void test_set_square() {
     std::cout << "Completed s.set_square() tests.\n";
 }
 
-void test_valid_square() {
+void test_valid_square()
+{
     std::cout << "Testing valid square...\n";
 
     Sudoku s = setup_valid_square();
@@ -166,7 +177,8 @@ void test_valid_square() {
     std::cout << "Completed valid square tests.\n";
 }
 
-void test_invalid_square_row() {
+void test_invalid_square_row()
+{
     std::cout << "Testing row-invalid square...\n";
 
     Sudoku s = setup_invalid_square_row();
@@ -175,7 +187,8 @@ void test_invalid_square_row() {
     std::cout << "Completed row-invalid square tests.\n";
 }
 
-void test_invalid_square_col() {
+void test_invalid_square_col()
+{
     std::cout << "Testing column-invalid square...\n";
 
     Sudoku s = setup_invalid_square_col();
@@ -184,7 +197,8 @@ void test_invalid_square_col() {
     std::cout << "Completed column-invalid square tests.\n";
 }
 
-void test_invalid_square_section() {
+void test_invalid_square_section()
+{
     std::cout << "Testing section-invalid square...\n";
 
     Sudoku s = setup_invalid_square_section();
@@ -193,7 +207,8 @@ void test_invalid_square_section() {
     std::cout << "Completed section-invalid square tests.\n";
 }
 
-void run_tests() {
+void run_tests()
+{
     test_get_space();
     test_set_space();
     test_get_space();
