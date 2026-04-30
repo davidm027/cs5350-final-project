@@ -13,13 +13,13 @@ std::array<std::array<int, 9>, 9> Sudoku::initialize_grid() {
     return grid;
 }
 
-int Sudoku::get_square(int row, int col) {
+int Sudoku::get_space(int row, int col) {
     assert(row >= 0 && row <= 8 && "Desired row must be in between 0 and 8.");
     assert(col >= 0 && col <= 8 && "Desired column must be in between 0 and 8.");
     return this->grid.at(row).at(col);
 }
 
-void Sudoku::set_square(int row, int col, int value) {
+void Sudoku::set_space(int row, int col, int value) {
     assert(row >= 0 && row <= 8 && "Desired row must be in between 0 and 8.");
     assert(col >= 0 && col <= 8 && "Desired column must be in between 0 and 8.");
     assert(value >= 1 && value <= 9 && "Desired value must be in between 1 and 9.");
@@ -30,46 +30,68 @@ std::array<std::array<int, 9>, 9> Sudoku::get_grid() {
     return this->grid;
 }
 
-std::array<int, 9> Sudoku::get_square(int index) {
-    assert(index >= 1 && index <= 9 && "Desired square must be in between 1 and 9.");
+std::array<int, 9> Sudoku::get_row(int row_index) {
+    assert(row_index >= 0 && row_index <= 8 && "Desired row must be in between 0 and 8.");
+
+    std::array<int, 9> row;
+    for (int col = 0; col < 9; col++) {
+        row[col] = this->get_space(row_index, col);
+    }
+
+    return row;
+}
+
+std::array<int, 9> Sudoku::get_column(int column_index) {
+    assert(column_index >= 0 && column_index <= 8 && "Desired column must be in between 0 and 8.");
+
+    std::array<int, 9> column;
+    for (int row = 0; row < 9; row++) {
+        column[row] = this->get_space(row, column_index);
+    }
+
+    return column;
+}
+
+std::array<int, 9> Sudoku::get_square(int square_index) {
+    assert(square_index >= 1 && square_index <= 9 && "Desired square must be in between 1 and 9.");
     int row;
     int col;
 
     std::array<int, 9> square;
-    switch (index) {
-        case 1:
+    switch (square_index) {
+        case 0:
             col = 1;
+            row = 1;
+            break;
+        case 1:
+            col = 4;
             row = 1;
             break;
         case 2:
-            col = 4;
+            col = 7;
             row = 1;
             break;
         case 3:
-            col = 7;
-            row = 1;
+            col = 1;
+            row = 4;
             break;
         case 4:
-            col = 1;
+            col = 4;
             row = 4;
             break;
         case 5:
-            col = 4;
-            row = 4;
-            break;
-        case 6:
             col = 7;
             row = 4;
             break;
-        case 7:
+        case 6:
             col = 1;
             row = 7;
             break;
-        case 8:
+        case 7:
             col = 4;
             row = 7;
             break;
-        case 9:
+        case 8:
             col = 7;
             row = 7;
             break;
@@ -80,7 +102,7 @@ std::array<int, 9> Sudoku::get_square(int index) {
     int idx = 0;
     for (int i = row - 1; i <= row + 1; i++) {
         for (int j = col - 1; j <= col + 1; j++) {
-            square[idx++] = this->get_square(i, j);
+            square[idx++] = this->get_space(i, j);
         }
     }
 
@@ -92,7 +114,7 @@ void Sudoku::print() {
     for (int i = 0; i < 9; ++i) {
         std::cout << "║";
         for (int j = 0; j < 9; ++j) {
-            int item = this->get_square(i, j);
+            int item = this->get_space(i, j);
             if (item == 0) {
                 std::cout << "   ";
             } else {
