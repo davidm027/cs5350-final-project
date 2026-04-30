@@ -93,7 +93,11 @@ void Sudoku::print() {
         std::cout << "║";
         for (int j = 0; j < 9; ++j) {
             int item = this->get_square(i, j);
-            std::cout << " " << item << " ";
+            if (item == 0) {
+                std::cout << "   ";
+            } else {
+                std::cout << " " << item << " ";
+            }
             if ((j + 1) % 3 == 0) {
                 std::cout << "║";
             } else {
