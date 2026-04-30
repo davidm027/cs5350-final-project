@@ -6,6 +6,7 @@ class Sudoku {
     int get_square(int row, int col);
     void set_square(int row, int col, int value);
     std::array<std::array<int, 9>, 9> get_grid();
+    std::array<int, 9> get_square(int index);
     void print();
 
    private:

@@ -30,6 +30,63 @@ std::array<std::array<int, 9>, 9> Sudoku::get_grid() {
     return this->grid;
 }
 
+std::array<int, 9> Sudoku::get_square(int index) {
+    assert(index >= 1 && index <= 9 && "Desired square must be in between 1 and 9.");
+    int row;
+    int col;
+
+    std::array<int, 9> square;
+    switch (index) {
+        case 1:
+            col = 1;
+            row = 1;
+            break;
+        case 2:
+            col = 4;
+            row = 1;
+            break;
+        case 3:
+            col = 7;
+            row = 1;
+            break;
+        case 4:
+            col = 1;
+            row = 4;
+            break;
+        case 5:
+            col = 4;
+            row = 4;
+            break;
+        case 6:
+            col = 7;
+            row = 4;
+            break;
+        case 7:
+            col = 1;
+            row = 7;
+            break;
+        case 8:
+            col = 4;
+            row = 7;
+            break;
+        case 9:
+            col = 7;
+            row = 7;
+            break;
+        default:
+            break;
+    }
+
+    int idx = 0;
+    for (int i = row - 1; i <= row + 1; i++) {
+        for (int j = col - 1; j <= col + 1; j++) {
+            square[idx++] = this->get_square(i, j);
+        }
+    }
+
+    return square;
+}
+
 void Sudoku::print() {
     std::cout << "╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗\n";
     for (int i = 0; i < 9; ++i) {
