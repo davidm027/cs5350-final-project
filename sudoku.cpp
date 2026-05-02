@@ -1,5 +1,5 @@
 #include "sudoku.hpp"
-
+#include "vector"
 #include <cassert>
 #include <iostream>
 #include <set>
@@ -235,6 +235,8 @@ bool Sudoku::is_valid()
     return true;
 }
 
+
+
 void Sudoku::print()
 {
     std::cout << "╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗\n";
@@ -277,3 +279,36 @@ void Sudoku::print()
     }
     std::cout << "╚═══╧═══╧═══╩═══╧═══╧═══╩═══╧═══╧═══╝\n";
 }
+
+
+// int Sudoku::unique(int row, int col) {
+//     std::vector<int> used(10, 0);
+//     int count = 0;
+//     int return_val = -1;
+//
+//     for (auto & c : get_column(col)) {
+//         used[c] = 1;
+//     }
+//
+//     for (auto & r : get_row(row)) {
+//         used[r] = 1;
+//     }
+//
+//     for (auto & val : get_square(find_square(row, col))){
+//         used[val] = 1;
+//     }
+//
+//     for (int i = 1; i <= 9; i++) {
+//         if (used[i] == 0) {
+//             count += 1;
+//             return_val = i;
+//         }
+//     }
+//
+//     if (count == 1) {
+//         return return_val;
+//     }
+//     else {
+//         return -1;
+//     }
+// }

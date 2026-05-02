@@ -5,6 +5,7 @@
 #include <omp.h>
 
 
+#include <chrono>
 
 
 
@@ -12,7 +13,6 @@ bool regular_brute_force(Sudoku & input, int row, int col){
     if (row == 9 )
         return true;
 
-
     if (col == 9) {
         return regular_brute_force(input, row + 1, 0);
     }
@@ -32,12 +32,10 @@ bool regular_brute_force(Sudoku & input, int row, int col){
     return false;
 }
 
-
-bool omp_brute_force(Sudoku & input, int row, int col){
+bool advanced_serial(Sudoku & input, int row, int col){
     if (row == 9 )
         return true;
 
-
     if (col == 9) {
         return regular_brute_force(input, row + 1, 0);
     }
@@ -45,9 +43,7 @@ bool omp_brute_force(Sudoku & input, int row, int col){
     if (input.get_space(row, col)!= 0) {
         return regular_brute_force(input, row, col + 1);
     }
-    omp_set_num_threads(9);
 
-    #pragma omp parallel
     for (int c = 0; c < 9; c++) {
         if (input.is_choice_valid(row, col, c)) {
             input.set_space(row, col, c);
@@ -59,7 +55,48 @@ bool omp_brute_force(Sudoku & input, int row, int col){
     return false;
 }
 
+//
+// bool omp_brute_force(Sudoku & input, int row, int col){
+//     if (row == 9 )
+//         return true;
+//
+//     if (col == 9) {
+//         return regular_brute_force(input, row + 1, 0);
+//     }
+//
+//     if (input.get_space(row, col)!= 0) {
+//         return regular_brute_force(input, row, col + 1);
+//     }
+//     omp_set_num_threads(9);
+//
+//     #pragma omp parallel
+//     for (int c = 0; c < 9; c++) {
+//         if (input.is_choice_valid(row, col, c)) {
+//             input.set_space(row, col, c);
+//             if (regular_brute_force(input, row, col + 1) )
+//                 return true;
+//             input.set_space(row, col, 0);
+//         }
+//     }
+//     return false;
+// }
 
+
+template <typename Func>
+void time_function(Func f, Sudoku & input, int row, int col) {
+    auto start = std::chrono::steady_clock::now();
+    ten_times(f, input, row, col);
+    auto end =  std::chrono::steady_clock::now();
+    auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+    std::cout<<"time elapse is : " << ns.count() /1000<< std::endl;
+}
+
+template <typename Func>
+void ten_times(Func f, Sudoku & input, int row, int col) {
+    for (int i = 0; i < 1000; i++) {
+        auto h = f(input, row, col);
+    }
+}
 
 // sudoku_test.cpp
 int main() {
@@ -71,6 +108,6 @@ int main() {
 
     s.set_grid(squares);
 
-    bool h = omp_brute_force(s, 0, 0);
+    time_function(regular_brute_force, s, 0, 0);
     s.print();
 }

@@ -3,6 +3,7 @@
 #include <array>
 #include <vector>
 
+
 class Sudoku
 {
    public:
@@ -18,6 +19,7 @@ class Sudoku
     void set_grid(std::vector<std::vector<int>> values);
     bool is_valid();
     void print();
+    // int unique(int, int );
 
    private:
     std::array<std::array<int, 9>, 9> initialize_grid();
