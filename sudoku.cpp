@@ -195,6 +195,28 @@ void Sudoku::set_grid(std::vector<std::vector<int>> values)
     }
 }
 
+
+bool contains(const std::array<int, 9>& arr, int val) {
+    for (int row = 0; row < 9; row++) {
+        if (arr[row] == val) return true;
+    }
+    return false;
+}
+
+int find_square(int row, int column) {
+    int r = row / 3 ;
+    int c = column / 3 ;
+    return r * 3 + c;
+}
+
+bool Sudoku::is_choice_valid(int row, int col, int value){
+
+    if (contains(get_column(col), value) or contains(get_row(row), value) or contains(get_square(find_square(row, col)), value)) {
+        return false;
+    }
+    return true;
+}
+
 bool Sudoku::is_valid()
 {
     for (int i = 0; i < 9; i++)
