@@ -33,6 +33,7 @@ bool regular_brute_force(Sudoku & input, int row, int col){
     return false;
 }
 
+// to be implemented
 bool advanced_serial(Sudoku & input, int row, int col){
     if (row == 9 )
         return true;
@@ -68,7 +69,6 @@ bool omp_brute_force(Sudoku & input, int row, int col){
     if (input.get_space(row, col)!= 0) {
         return regular_brute_force(input, row, col + 1);
     }
-    omp_set_num_threads(9);
 
     for (int c = 0; c < 9; c++) {
         if (input.is_choice_valid(row, col, c)) {
