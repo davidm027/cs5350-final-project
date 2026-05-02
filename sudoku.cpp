@@ -196,14 +196,14 @@ void Sudoku::set_grid(std::vector<std::vector<int>> values)
 }
 
 
-bool contains(const std::array<int, 9>& arr, int val) {
+bool Sudoku::contains(const std::array<int, 9>& arr, int val) {
     for (int row = 0; row < 9; row++) {
         if (arr[row] == val) return true;
     }
     return false;
 }
 
-int find_square(int row, int column) {
+int Sudoku::find_square(int row, int column) {
     int r = row / 3 ;
     int c = column / 3 ;
     return r * 3 + c;
