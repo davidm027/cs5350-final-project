@@ -1,8 +1,10 @@
 #include "sudoku.hpp"
-#include "vector"
+
 #include <cassert>
 #include <iostream>
 #include <set>
+
+#include "vector"
 
 Sudoku::Sudoku()
 {
@@ -27,7 +29,7 @@ void Sudoku::set_space(int row, int col, int value)
 {
     assert(row >= 0 && row <= 8 && "Desired row must be in between 0 and 8.");
     assert(col >= 0 && col <= 8 && "Desired column must be in between 0 and 8.");
-    assert(value >= 1 && value <= 9 && "Desired value must be in between 1 and 9.");
+    assert(value >= 0 && value <= 9 && "Desired value must be in between 0 and 9.");
     this->grid.at(row).at(col) = value;
 }
 
@@ -186,6 +188,33 @@ void Sudoku::set_square(int square_index, std::vector<int> values)
     }
 }
 
+void Sudoku::set_row(int row, std::vector<int> values)
+{
+    assert(values.size() == 9);
+    for (int col = 0; col < 9; col++)
+    {
+        this->set_space(row, col, values[col]);
+    }
+}
+
+void Sudoku::set_grid_by_rows(std::vector<std::vector<int>> values)
+{
+    assert(values.size() == 9);
+    for (int row = 0; row < 9; row++)
+    {
+        this->set_row(row, values[row]);
+    }
+}
+
+void Sudoku::set_grid_by_squares(std::vector<std::vector<int>> values)
+{
+    assert(values.size() == 9);
+    for (int row = 0; row < 9; row++)
+    {
+        this->set_square(row, values[row]);
+    }
+}
+
 void Sudoku::set_grid(std::vector<std::vector<int>> values)
 {
     assert(values.size() == 9);
@@ -195,23 +224,28 @@ void Sudoku::set_grid(std::vector<std::vector<int>> values)
     }
 }
 
-
-bool Sudoku::contains(const std::array<int, 9>& arr, int val) {
-    for (int row = 0; row < 9; row++) {
-        if (arr[row] == val) return true;
+bool Sudoku::contains(const std::array<int, 9>& arr, int val)
+{
+    for (int row = 0; row < 9; row++)
+    {
+        if (arr[row] == val)
+            return true;
     }
     return false;
 }
 
-int Sudoku::find_square(int row, int column) {
-    int r = row / 3 ;
-    int c = column / 3 ;
+int Sudoku::find_square(int row, int column)
+{
+    int r = row / 3;
+    int c = column / 3;
     return r * 3 + c;
 }
 
-bool Sudoku::is_choice_valid(int row, int col, int value){
-
-    if (contains(get_column(col), value) or contains(get_row(row), value) or contains(get_square(find_square(row, col)), value)) {
+bool Sudoku::is_choice_valid(int row, int col, int value)
+{
+    if (contains(get_column(col), value) or contains(get_row(row), value) or
+        contains(get_square(find_square(row, col)), value))
+    {
         return false;
     }
     return true;
@@ -221,11 +255,11 @@ bool Sudoku::is_valid()
 {
     for (int i = 0; i < 9; i++)
     {
-        auto          row = this->get_row(i);
+        auto row = this->get_row(i);
         std::set<int> row_set(row.begin(), row.end());
-        auto          col = this->get_column(i);
+        auto col = this->get_column(i);
         std::set<int> col_set(col.begin(), col.end());
-        auto          square = this->get_square(i);
+        auto square = this->get_square(i);
         std::set<int> square_set(square.begin(), square.end());
         if (row_set.size() != 9 || col_set.size() != 9 || square_set.size() != 9)
         {
@@ -235,7 +269,32 @@ bool Sudoku::is_valid()
     return true;
 }
 
-
+bool Sudoku::operator==(Sudoku rhs)
+{
+    for (int i = 0; i < 9; i++)
+    {
+        auto lhs_row = this->get_row(i);
+        auto rhs_row = rhs.get_row(i);
+        // std::cout << "lhs_row: "
+        //           << std::for_each(lhs_row.begin(), lhs_row.end(),
+        //                            [](int i) -> void
+        //                            {
+        //                                std::cout << i << "\n";
+        //                            });
+        // std::cout << "rhs_row: "
+        //           << std::for_each(rhs_row.begin(), rhs_row.end(),
+        //                            [](int i) -> void
+        //                            {
+        //                                std::cout << i << "\n";
+        //                            });
+        if (lhs_row != rhs_row)
+        {
+            // std::cout << "Rows not equal\n";
+            return false;
+        }
+    }
+    return true;
+}
 
 void Sudoku::print()
 {
@@ -279,7 +338,6 @@ void Sudoku::print()
     }
     std::cout << "╚═══╧═══╧═══╩═══╧═══╧═══╩═══╧═══╧═══╝\n";
 }
-
 
 // int Sudoku::unique(int row, int col) {
 //     std::vector<int> used(10, 0);
